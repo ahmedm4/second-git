@@ -116,18 +116,31 @@ const DOM = {
 // 3. INITIALIZATION
 // ==========================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     loadState();
-    initializeApp();
     setupEventListeners();
     applyDarkMode();
-    renderContent();
-    updateFavoritesCount();
-    updateStatistics();
+
+    // جلب البيانات أولاً
+    await initializeApp();
 });
 
-function initializeApp() {
-    console.log('🌙 منابر الهدى - التطبيق جاهز!');
+async function initializeApp() {
+    console.log('🌙 منابر الهدى - بدء التطبيق...');
+
+    // Show loading overlay
+    if (DOM.loadingOverlay) {
+        DOM.loadingOverlay.classList.add('active');
+    }
+
+    // جلب البيانات من API
+    const dataLoaded = await fetchSoundsData();
+
+    if (dataLoaded) {
+        console.log('✅ تم جلب البيانات بنجاح');
+    } else {
+        console.warn('⚠️ تم استخدام البيانات الاحتياطية');
+    }
 
     // Set initial volume
     if (DOM.audioElement && DOM.volumeSlider) {
@@ -140,12 +153,46 @@ function initializeApp() {
         DOM.repeatBtn.classList.add('active');
     }
 
+    // تحديث مدة الأصوات عند تحميل الميتاداتا
+    setupAudioDurationTracking();
+
+    // عرض المحتوى
+    renderContent();
+    updateFavoritesCount();
+    updateStatistics();
+
     // Hide loading overlay
     setTimeout(() => {
         if (DOM.loadingOverlay) {
             DOM.loadingOverlay.classList.remove('active');
         }
     }, 500);
+
+    console.log('🌙 منابر الهدى - التطبيق جاهز!');
+}
+
+// دالة لتتبع وتحديث مدة الأصوات
+function setupAudioDurationTracking() {
+    if (!DOM.audioElement) return;
+
+    DOM.audioElement.addEventListener('loadedmetadata', () => {
+        // تحديث مدة الصوت الحالي
+        if (AppState.currentAudio && AppState.currentAudio.reader) {
+            const duration = DOM.audioElement.duration;
+            AppState.currentAudio.reader.duration = formatTime(duration);
+
+            // حفظ في البيانات الأصلية
+            const category = AppState.currentAudio.category === 'duas' ? duasData : latmiyatData;
+            const content = category.find(item => item.id === AppState.currentAudio.content.id);
+
+            if (content) {
+                const reader = content.readers.find(r => r.id === AppState.currentAudio.reader.id);
+                if (reader) {
+                    reader.duration = formatTime(duration);
+                }
+            }
+        }
+    });
 }
 
 // ==========================================
@@ -226,6 +273,19 @@ function setupEventListeners() {
         DOM.audioElement.addEventListener('pause', () => {
             AppState.isPlaying = false;
             DOM.audioPlayer.classList.remove('playing');
+        });
+        DOM.audioElement.addEventListener('error', (e) => {
+            console.error('❌ خطأ في تحميل الصوت:', e);
+            showNotification('error', 'خطأ', 'تعذر تحميل الملف الصوتي. يرجى المحاولة مرة أخرى.');
+
+            // محاولة تشغيل الصوت التالي
+            setTimeout(() => {
+                playNext();
+            }, 2000);
+        });
+        DOM.audioElement.addEventListener('stalled', () => {
+            console.warn('⚠️ تباطؤ في تحميل الصوت');
+            showNotification('warning', 'تحميل بطيء', 'يتم تحميل الصوت... يرجى الانتظار.');
         });
     }
 
@@ -770,7 +830,7 @@ function renderFavorites() {
 // ==========================================
 
 function handleSearch(e) {
-    const query = e.target.value.toLowerCase().trim();
+    const query = e.target.value.trim();
 
     if (!query) {
         renderContent();
@@ -778,23 +838,17 @@ function handleSearch(e) {
         return;
     }
 
-    // Search in duas
-    const filteredDuas = duasData.filter(dua =>
-        dua.title.toLowerCase().includes(query) ||
-        dua.description.toLowerCase().includes(query) ||
-        dua.readers.some(reader => reader.name.toLowerCase().includes(query))
-    );
-
-    // Search in latmiyat
-    const filteredLatmiyat = latmiyatData.filter(latmiya =>
-        latmiya.title.toLowerCase().includes(query) ||
-        latmiya.description.toLowerCase().includes(query) ||
-        latmiya.readers.some(reader => reader.name.toLowerCase().includes(query))
-    );
+    // استخدام دالة البحث المتقدمة التي تدعم المرادفات
+    const results = searchInData(query);
 
     // Render filtered results
-    renderFilteredDuas(filteredDuas);
-    renderFilteredLatmiyat(filteredLatmiyat);
+    renderFilteredDuas(results.duas);
+    renderFilteredLatmiyat(results.latmiyat);
+
+    // عرض رسالة إذا لم تكن هناك نتائج في كلا القسمين
+    if (results.duas.length === 0 && results.latmiyat.length === 0) {
+        showNotification('info', 'البحث', `لم يتم العثور على نتائج لـ "${query}"`);
+    }
 }
 
 function renderFilteredDuas(filteredDuas) {
