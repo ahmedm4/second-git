@@ -263,6 +263,9 @@ function setupEventListeners() {
     // Progress bar
     if (DOM.progressBar) {
         DOM.progressBar.addEventListener('input', handleProgressChange);
+        console.log('✅ Progress bar event listener attached');
+    } else {
+        console.error('❌ Progress bar element not found!');
     }
 
     // Audio element events
@@ -270,6 +273,7 @@ function setupEventListeners() {
         DOM.audioElement.addEventListener('timeupdate', updateProgress);
         DOM.audioElement.addEventListener('loadedmetadata', updateDuration);
         DOM.audioElement.addEventListener('ended', handleAudioEnded);
+        console.log('✅ Audio element event listeners attached');
         DOM.audioElement.addEventListener('play', () => {
             AppState.isPlaying = true;
             DOM.audioPlayer.classList.add('playing');
@@ -560,6 +564,12 @@ function playAudio(contentId, readerId, category) {
     DOM.playerArtist.textContent = reader.name;
     DOM.playerImage.src = content.image;
 
+    // Reset progress bar
+    DOM.progressBar.value = 0;
+    DOM.progressFill.style.width = '0%';
+    DOM.currentTime.textContent = '0:00';
+    DOM.duration.textContent = '0:00';
+
     // Load and play audio
     DOM.audioElement.src = reader.audioUrl;
     DOM.audioElement.play();
@@ -567,6 +577,8 @@ function playAudio(contentId, readerId, category) {
     // Show player
     DOM.audioPlayer.classList.add('active');
     DOM.audioPlayer.style.display = 'block';
+
+    console.log('🎵 Audio loaded:', reader.audioUrl);
 
     // Update favorite button
     updatePlayerFavoriteButton();
@@ -640,7 +652,10 @@ function closePlayer() {
 }
 
 function updateProgress() {
-    if (!DOM.audioElement.duration) return;
+    if (!DOM.audioElement.duration) {
+        console.log('⚠️ No duration yet');
+        return;
+    }
 
     const percent = (DOM.audioElement.currentTime / DOM.audioElement.duration) * 100;
     DOM.progressBar.value = percent;
@@ -650,10 +665,16 @@ function updateProgress() {
 
     // Update listening time
     AppState.statistics.totalListeningTime = (AppState.statistics.totalListeningTime || 0) + 1;
+
+    // Debug log every 5 seconds
+    if (Math.floor(DOM.audioElement.currentTime) % 5 === 0 && Math.floor(DOM.audioElement.currentTime) !== 0) {
+        console.log(`📊 Progress: ${percent.toFixed(1)}% - ${formatTime(DOM.audioElement.currentTime)} / ${formatTime(DOM.audioElement.duration)}`);
+    }
 }
 
 function updateDuration() {
     DOM.duration.textContent = formatTime(DOM.audioElement.duration);
+    console.log('⏱️ Duration loaded:', formatTime(DOM.audioElement.duration));
 }
 
 function handleProgressChange(e) {
@@ -661,6 +682,7 @@ function handleProgressChange(e) {
 
     const time = (e.target.value / 100) * DOM.audioElement.duration;
     DOM.audioElement.currentTime = time;
+    console.log('🎚️ Progress changed to:', formatTime(time));
 }
 
 function handleVolumeChange(e) {
@@ -990,17 +1012,27 @@ function updateStatisticsTable() {
 }
 
 function renderStatisticsCharts() {
-    renderTopDuasChart();
-    renderTopReadersChart();
+    console.log('📊 Rendering statistics charts...');
+
+    // Use setTimeout to ensure DOM is ready and prevent animation issues
+    setTimeout(() => {
+        renderTopDuasChart();
+        renderTopReadersChart();
+    }, 100);
 }
 
 function renderTopDuasChart() {
     const canvas = document.getElementById('topDuasChart');
-    if (!canvas) return;
+    if (!canvas) {
+        console.error('❌ topDuasChart canvas not found');
+        return;
+    }
 
     // Destroy existing chart instance to prevent infinite expansion
     if (topDuasChartInstance) {
+        console.log('🔄 Destroying existing duas chart...');
         topDuasChartInstance.destroy();
+        topDuasChartInstance = null;
     }
 
     // Get top 5 duas by total plays
@@ -1011,6 +1043,8 @@ function renderTopDuasChart() {
             plays: totalPlays
         };
     }).sort((a, b) => b.plays - a.plays).slice(0, 5);
+
+    console.log('📈 Creating duas chart with data:', duaStats);
 
     topDuasChartInstance = new Chart(canvas, {
         type: 'bar',
@@ -1057,11 +1091,16 @@ function renderTopDuasChart() {
 
 function renderTopReadersChart() {
     const canvas = document.getElementById('topReadersChart');
-    if (!canvas) return;
+    if (!canvas) {
+        console.error('❌ topReadersChart canvas not found');
+        return;
+    }
 
     // Destroy existing chart instance to prevent infinite expansion
     if (topReadersChartInstance) {
+        console.log('🔄 Destroying existing readers chart...');
         topReadersChartInstance.destroy();
+        topReadersChartInstance = null;
     }
 
     // Get all readers with their plays
@@ -1081,6 +1120,8 @@ function renderTopReadersChart() {
         .map(([name, plays]) => ({ name, plays }))
         .sort((a, b) => b.plays - a.plays)
         .slice(0, 5);
+
+    console.log('📈 Creating readers chart with data:', topReaders);
 
     topReadersChartInstance = new Chart(canvas, {
         type: 'bar',

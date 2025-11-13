@@ -1074,7 +1074,7 @@ body.dark-mode .audio-player {
     height: 6px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: var(--radius-full);
-    overflow: hidden;
+    overflow: visible;
 }
 
 body.dark-mode .player-progress-bar {
@@ -1315,6 +1315,13 @@ body.dark-mode .volume-slider input[type="range"] {
     border-radius: var(--radius-xl);
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-md);
+    height: 400px;
+    position: relative;
+}
+
+.chart-container canvas {
+    max-height: 350px !important;
+    width: 100% !important;
 }
 
 .chart-title {
