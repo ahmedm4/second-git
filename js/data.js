@@ -5,6 +5,14 @@
 // رابط ملف JSON
 const SOUNDS_JSON_URL = 'https://daniapp.org/alexa/sounds2.json';
 
+// CORS Proxy - لحل مشكلة CORS عند التطوير المحلي
+// إذا كنت تستخدم localhost، استخدم CORS_PROXY
+// إذا كان التطبيق منشور على نفس النطاق، اجعلها فارغة
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+// بدائل أخرى:
+// const CORS_PROXY = 'https://corsproxy.io/?';
+// const CORS_PROXY = '';  // لا تستخدم proxy
+
 // متغيرات عامة للبيانات
 let rawData = null;
 let duasData = [];
@@ -22,7 +30,11 @@ async function fetchSoundsData() {
     try {
         console.log('🔄 جاري جلب البيانات من API...');
 
-        const response = await fetch(SOUNDS_JSON_URL);
+        // استخدام CORS Proxy إذا كان محدداً
+        const url = CORS_PROXY ? CORS_PROXY + encodeURIComponent(SOUNDS_JSON_URL) : SOUNDS_JSON_URL;
+        console.log('📡 الرابط:', url);
+
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,6 +49,7 @@ async function fetchSoundsData() {
         return true;
     } catch (error) {
         console.error('❌ خطأ في جلب البيانات:', error);
+        console.log('💡 تلميح: إذا كنت تستخدم localhost، تأكد من تفعيل CORS_PROXY في js/data.js');
 
         // استخدام بيانات تجريبية في حالة الفشل
         useFallbackData();
