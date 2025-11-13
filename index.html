@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منابر الهدى - مكتبة الأصوات الإسلامية الشاملة للأدعية واللطميات">
+    <meta name="keywords" content="أدعية، لطميات، قرآن، إسلام، أصوات إسلامية">
+    <meta name="theme-color" content="#1e3a8a">
+
+    <title>منابر الهدى - مكتبة الأصوات الإسلامية</title>
+
+    <!-- Google Fonts - Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Chart.js for Statistics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Islamic Pattern Background -->
+    <div class="islamic-pattern"></div>
+
+    <!-- Header with Gradient -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo & Title -->
+                <div class="logo-section">
+                    <span class="logo-icon">🌙</span>
+                    <div class="logo-text">
+                        <h1 class="app-title">منابر الهدى</h1>
+                        <p class="app-subtitle">مكتبة الأصوات الإسلامية</p>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <!-- Search -->
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="ابحث عن دعاء أو لطمية..." autocomplete="off">
+                        <button class="clear-search" id="clearSearch">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="تبديل الوضع الليلي">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <!-- Settings -->
+                    <button class="settings-btn" id="settingsBtn" aria-label="الإعدادات">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Navigation Tabs -->
+            <nav class="tabs-container" role="tablist">
+                <button class="tab-card active" data-tab="duas" role="tab" aria-selected="true">
+                    <i class="fas fa-book-quran tab-icon"></i>
+                    <span class="tab-text">الأدعية</span>
+                    <div class="tab-indicator"></div>
+                </button>
+
+                <button class="tab-card" data-tab="latmiyat" role="tab" aria-selected="false">
+                    <i class="fas fa-masks-theater tab-icon"></i>
+                    <span class="tab-text">اللطميات</span>
+                    <div class="tab-indicator"></div>
+                </button>
+
+                <button class="tab-card" data-tab="favorites" role="tab" aria-selected="false">
+                    <i class="fas fa-heart tab-icon"></i>
+                    <span class="tab-text">المفضلة</span>
+                    <span class="badge" id="favoritesCount">0</span>
+                    <div class="tab-indicator"></div>
+                </button>
+
+                <button class="tab-card" data-tab="statistics" role="tab" aria-selected="false">
+                    <i class="fas fa-chart-bar tab-icon"></i>
+                    <span class="tab-text">الإحصائيات</span>
+                    <div class="tab-indicator"></div>
+                </button>
+            </nav>
+
+            <!-- Tab Content: Duas -->
+            <section class="tab-content active" id="duas-content" role="tabpanel">
+                <div class="section-header">
+                    <h2>
+                        <i class="fas fa-book-quran"></i>
+                        الأدعية المباركة
+                    </h2>
+                    <p class="section-description">مجموعة مختارة من الأدعية بأصوات القراء المميزين</p>
+                </div>
+
+                <div class="cards-grid" id="duasGrid">
+                    <!-- Duas cards will be dynamically inserted here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="duasEmpty" style="display: none;">
+                    <i class="fas fa-book-quran empty-icon"></i>
+                    <h3>لا توجد نتائج</h3>
+                    <p>جرب البحث بكلمات أخرى</p>
+                </div>
+            </section>
+
+            <!-- Tab Content: Latmiyat -->
+            <section class="tab-content" id="latmiyat-content" role="tabpanel" style="display: none;">
+                <div class="section-header">
+                    <h2>
+                        <i class="fas fa-masks-theater"></i>
+                        اللطميات الحسينية
+                    </h2>
+                    <p class="section-description">مجموعة من اللطميات الحسينية المؤثرة</p>
+                </div>
+
+                <div class="cards-grid" id="latmiyatGrid">
+                    <!-- Latmiyat cards will be dynamically inserted here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="latmiyatEmpty" style="display: none;">
+                    <i class="fas fa-masks-theater empty-icon"></i>
+                    <h3>لا توجد نتائج</h3>
+                    <p>جرب البحث بكلمات أخرى</p>
+                </div>
+            </section>
+
+            <!-- Tab Content: Favorites -->
+            <section class="tab-content" id="favorites-content" role="tabpanel" style="display: none;">
+                <div class="section-header">
+                    <h2>
+                        <i class="fas fa-heart"></i>
+                        المفضلة
+                    </h2>
+                    <p class="section-description">الأصوات التي أضفتها إلى المفضلة</p>
+                </div>
+
+                <div class="cards-grid" id="favoritesGrid">
+                    <!-- Favorites cards will be dynamically inserted here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="favoritesEmpty">
+                    <i class="fas fa-heart-broken empty-icon"></i>
+                    <h3>لا توجد مفضلات بعد</h3>
+                    <p>ابدأ بإضافة أصوات إلى المفضلة لتظهر هنا</p>
+                    <button class="btn btn-primary" onclick="switchTab('duas')">
+                        <i class="fas fa-book-quran"></i>
+                        تصفح الأدعية
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tab Content: Statistics -->
+            <section class="tab-content" id="statistics-content" role="tabpanel" style="display: none;">
+                <div class="section-header">
+                    <h2>
+                        <i class="fas fa-chart-bar"></i>
+                        الإحصائيات
+                    </h2>
+                    <p class="section-description">نظرة عامة على استخدامك للتطبيق</p>
+                </div>
+
+                <!-- Statistics Summary Cards -->
+                <div class="stats-summary">
+                    <div class="stat-card" style="--stat-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="stat-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="totalPlays">0</h3>
+                            <p class="stat-label">مرات الاستماع</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" style="--stat-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="totalFavorites">0</h3>
+                            <p class="stat-label">المفضلة</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" style="--stat-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="totalHours">0</h3>
+                            <p class="stat-label">ساعات الاستماع</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" style="--stat-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="stat-icon">
+                            <i class="fas fa-book-quran"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="totalContent">0</h3>
+                            <p class="stat-label">إجمالي المحتوى</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-bar"></i>
+                            الأدعية الأكثر استماعاً
+                        </h3>
+                        <canvas id="topDuasChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="chart-title">
+                            <i class="fas fa-user-tie"></i>
+                            القراء الأكثر استماعاً
+                        </h3>
+                        <canvas id="topReadersChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Detailed Statistics Table -->
+                <div class="stats-table-container">
+                    <div class="stats-table-header">
+                        <h3>
+                            <i class="fas fa-list"></i>
+                            تفاصيل الاستماع
+                        </h3>
+                        <input type="text" class="table-search" id="statsSearch" placeholder="ابحث في الإحصائيات...">
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>العنوان</th>
+                                    <th>النوع</th>
+                                    <th>القارئ</th>
+                                    <th>مرات الاستماع</th>
+                                    <th>آخر استماع</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statsTableBody">
+                                <!-- Data will be dynamically inserted -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Audio Player (Fixed Bottom) -->
+    <div class="audio-player" id="audioPlayer" style="display: none;">
+        <div class="player-content">
+            <!-- Album Art -->
+            <div class="player-album">
+                <img id="playerImage" src="" alt="غلاف">
+                <div class="player-pulse"></div>
+            </div>
+
+            <!-- Track Info -->
+            <div class="player-info">
+                <h4 class="player-title" id="playerTitle">اسم الدعاء</h4>
+                <p class="player-artist" id="playerArtist">اسم القارئ</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="player-progress-container">
+                <span class="time-current" id="currentTime">0:00</span>
+                <div class="player-progress-bar">
+                    <input type="range" id="progressBar" min="0" max="100" value="0" step="0.1">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="time-duration" id="duration">0:00</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="player-controls">
+                <button class="control-btn btn-previous" id="prevBtn" aria-label="السابق">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+
+                <button class="control-btn btn-play-pause" id="playPauseBtn" aria-label="تشغيل/إيقاف">
+                    <i class="fas fa-play"></i>
+                </button>
+
+                <button class="control-btn btn-next" id="nextBtn" aria-label="التالي">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+
+            <!-- Volume & Additional Controls -->
+            <div class="player-extras">
+                <!-- Volume Control -->
+                <div class="volume-control">
+                    <button class="control-btn btn-volume" id="volumeBtn" aria-label="التحكم بالصوت">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <div class="volume-slider">
+                        <input type="range" id="volumeSlider" min="0" max="100" value="100">
+                    </div>
+                </div>
+
+                <!-- Repeat -->
+                <button class="control-btn btn-repeat" id="repeatBtn" aria-label="تكرار">
+                    <i class="fas fa-repeat"></i>
+                </button>
+
+                <!-- Favorite -->
+                <button class="control-btn btn-favorite" id="playerFavoriteBtn" aria-label="إضافة للمفضلة">
+                    <i class="far fa-heart"></i>
+                </button>
+
+                <!-- Close Player -->
+                <button class="control-btn btn-close" id="closePlayerBtn" aria-label="إغلاق المشغل">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden Audio Element -->
+        <audio id="audioElement"></audio>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
