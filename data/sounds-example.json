@@ -1,0 +1,218 @@
+{
+  "kumail": {
+    "name": "دعاء كُميل",
+    "synonyms": [
+      "كميل",
+      "دعاء كميل",
+      "كوميل",
+      "كُميل",
+      "دوعاء كميل",
+      "دوعاء كوميل",
+      "دوعاء كُميل"
+    ],
+    "sounds": [
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/adeeye/kumail/09753-dea_kmyl.mp3",
+        "reader": "باسم الكربلائي",
+        "readerSynonyms": ["باسم", "الكربلائي", "باسم الكربلائي"],
+        "image": "https://www.awarenessyemen.com/wp-content/uploads/2021/09/unnamed.jpg"
+      },
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/adeeye/kumail/09822-dea_kmyl.mp3",
+        "reader": "الشيخ باقر المقدسي",
+        "readerSynonyms": ["المقدسي", "باقر المقدسي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/adeeye/kumail/09751-dea_kmyl.mp3",
+        "reader": "السيد محمد الصافي",
+        "readerSynonyms": ["الصافي", "محمد الصافي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      }
+    ]
+  },
+  "adhan": {
+    "name": "الأذان",
+    "synonyms": ["الأذان", "اذان", "أذان", "ادان", "الاذان"],
+    "sounds": [
+      {
+        "url": "https://static.rafed.net/MP3Files/adhan/rafed-007.mp3",
+        "reader": "أباذر الحلواجي",
+        "readerSynonyms": ["الحلواجي", "اباذر", "أباذر الحلواجي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "url": "https://abothomama.s3.eu-north-1.amazonaws.com/azan3.mp3",
+        "reader": "حسين الزبيدي",
+        "readerSynonyms": ["الزبيدي", "حسين", "حسين الزبيدي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      }
+    ]
+  },
+  "tawassul": {
+    "name": "دعاء التوسل",
+    "synonyms": ["التوسل", "دعاء التوسل", "توسل", "التوصل"],
+    "sounds": [
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/tawasol/01.mp3",
+        "reader": "الحاج أحمد الساعدي",
+        "readerSynonyms": ["الساعدي", "أحمد الساعدي", "احمد الساعدي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/tawasol/02.mp3",
+        "reader": "الشيخ علي الحمادي",
+        "readerSynonyms": ["الحمادي", "علي الحمادي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      }
+    ]
+  },
+  "faraj": {
+    "name": "دعاء الفرج",
+    "synonyms": ["الفرج", "دعاء الفرج", "تعجيل الفرج", "الفرج الشريف"],
+    "sounds": [
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/faraj/01.mp3",
+        "reader": "الشيخ حسين الأكرف",
+        "readerSynonyms": ["الأكرف", "حسين الأكرف", "حسين"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "url": "https://static.rafed.net/MP3Files/doaa/faraj/02.mp3",
+        "reader": "الشيخ كاظم الدوخي",
+        "readerSynonyms": ["الدوخي", "كاظم الدوخي", "كاظم"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      }
+    ]
+  },
+  "latmiyat": {
+    "name": "اللطميات",
+    "synonyms": [
+      "لطمية",
+      "لطميات",
+      "قصيدة",
+      "قصائد",
+      "عزاء",
+      "نوحة",
+      "نوحات",
+      "مرثية"
+    ],
+    "sounds": [
+      {
+        "title": "رسول الله قد مات",
+        "titleSynonyms": [
+          "رسول الله",
+          "النبي",
+          "وفاة الرسول",
+          "النبي قد مات",
+          "الرسول",
+          "محمد"
+        ],
+        "url": "https://sawtalhoda.com/audio/uploaded/files/maktaba_iza3ia/06-monasabat/14-shahadat-ma3soumin/01-shahadt-rasol/tanwihat/ahadith/05.mp3",
+        "reader": "حسين الأكرف",
+        "readerSynonyms": ["الأكرف", "حسين الأكرف", "حسين"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "عباس يعيوني",
+        "titleSynonyms": [
+          "عباس",
+          "يعيوني",
+          "أبو الفضل",
+          "العباس",
+          "عباس عليه السلام"
+        ],
+        "url": "https://latmiyat.imamkadhim.com/wp-content/uploads/2025/07/2msMqCHHH5I.mp3",
+        "reader": "باسم الكربلائي",
+        "readerSynonyms": ["باسم", "الكربلائي", "باسم الكربلائي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "قوم ارويها",
+        "titleSynonyms": [
+          "قوم",
+          "ارويها",
+          "قوم اروها",
+          "قوم ارويحا",
+          "ارويحا"
+        ],
+        "url": "https://latmiyat.imamkadhim.com/wp-content/uploads/2025/05/6N0GF_5gpQg-4.mp3",
+        "reader": "باسم الكربلائي",
+        "readerSynonyms": ["باسم", "الكربلائي", "باسم الكربلائي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "يابوفاضل",
+        "titleSynonyms": [
+          "يابو فاضل",
+          "فاضل",
+          "طيحت",
+          "طيحت ايداك",
+          "طيحت إيدك",
+          "طيحت ايدك مو وقتها",
+          "مو وقتها",
+          "العباس"
+        ],
+        "url": "https://alexaalhuda.s3.eu-north-1.amazonaws.com/2/-+%D9%8A%D8%A7+%D8%A8%D9%88%D9%81%D8%A7%D8%B6%D9%84+_+%D8%A7%D9%84%D8%B1%D8%A7%D8%AF%D9%88%D8%AF+%D8%A8%D8%A7%D8%B3%D9%85+%D8%A7%D9%84%D9%83%D8%B1%D8%A8%D9%84%D8%A7%D8%A6%D9%8A--2017-09-28.mp3",
+        "reader": "باسم الكربلائي",
+        "readerSynonyms": ["باسم", "الكربلائي", "باسم الكربلائي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "يا حسين",
+        "titleSynonyms": [
+          "حسين",
+          "الحسين",
+          "حسين عليه السلام",
+          "الامام الحسين"
+        ],
+        "url": "https://example.com/ya-hussain.mp3",
+        "reader": "محمد الحجيرات",
+        "readerSynonyms": ["الحجيرات", "محمد الحجيرات", "محمد"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "يا زهراء",
+        "titleSynonyms": [
+          "زهراء",
+          "فاطمة",
+          "يا فاطمة",
+          "الزهراء",
+          "فاطمة الزهراء"
+        ],
+        "url": "https://example.com/ya-zahraa.mp3",
+        "reader": "علي الدلفي",
+        "readerSynonyms": ["الدلفي", "علي الدلفي", "علي"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "أمير المؤمنين",
+        "titleSynonyms": [
+          "علي",
+          "الامام علي",
+          "امير المؤمنين",
+          "أمير المؤمنين",
+          "علي بن أبي طالب"
+        ],
+        "url": "https://example.com/amir-almumineen.mp3",
+        "reader": "كاظم الساهر",
+        "readerSynonyms": ["الساهر", "كاظم", "كاظم الساهر"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      },
+      {
+        "title": "يا مهدي",
+        "titleSynonyms": [
+          "مهدي",
+          "المهدي",
+          "الإمام المهدي",
+          "صاحب الزمان",
+          "الحجة"
+        ],
+        "url": "https://example.com/ya-mahdi.mp3",
+        "reader": "صباح النجار",
+        "readerSynonyms": ["النجار", "صباح", "صباح النجار"],
+        "image": "https://daniapp.org/sawt_alhuda3.png"
+      }
+    ]
+  }
+}
