@@ -24,6 +24,10 @@ const AppState = {
     currentPlaylistIndex: 0
 };
 
+// Chart instances
+let topDuasChartInstance = null;
+let topReadersChartInstance = null;
+
 // Load state from localStorage
 function loadState() {
     const savedState = localStorage.getItem('manaberAlhuda_state');
@@ -994,6 +998,11 @@ function renderTopDuasChart() {
     const canvas = document.getElementById('topDuasChart');
     if (!canvas) return;
 
+    // Destroy existing chart instance to prevent infinite expansion
+    if (topDuasChartInstance) {
+        topDuasChartInstance.destroy();
+    }
+
     // Get top 5 duas by total plays
     const duaStats = duasData.map(dua => {
         const totalPlays = dua.readers.reduce((sum, reader) => sum + reader.plays, 0);
@@ -1003,7 +1012,7 @@ function renderTopDuasChart() {
         };
     }).sort((a, b) => b.plays - a.plays).slice(0, 5);
 
-    new Chart(canvas, {
+    topDuasChartInstance = new Chart(canvas, {
         type: 'bar',
         data: {
             labels: duaStats.map(d => d.title),
@@ -1050,6 +1059,11 @@ function renderTopReadersChart() {
     const canvas = document.getElementById('topReadersChart');
     if (!canvas) return;
 
+    // Destroy existing chart instance to prevent infinite expansion
+    if (topReadersChartInstance) {
+        topReadersChartInstance.destroy();
+    }
+
     // Get all readers with their plays
     const readerStats = {};
 
@@ -1068,7 +1082,7 @@ function renderTopReadersChart() {
         .sort((a, b) => b.plays - a.plays)
         .slice(0, 5);
 
-    new Chart(canvas, {
+    topReadersChartInstance = new Chart(canvas, {
         type: 'bar',
         data: {
             labels: topReaders.map(r => r.name),
