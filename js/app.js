@@ -116,12 +116,6 @@ const DOM = {
     loadingOverlay: document.getElementById('loadingOverlay')
 };
 
-// Verify critical DOM elements
-console.log('🔍 DOM Elements Check:');
-console.log('- progressBar:', DOM.progressBar ? '✅' : '❌');
-console.log('- progressFill:', DOM.progressFill ? '✅' : '❌');
-console.log('- audioElement:', DOM.audioElement ? '✅' : '❌');
-
 // ==========================================
 // 3. INITIALIZATION
 // ==========================================
@@ -136,7 +130,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function initializeApp() {
-    console.log('🌙 منابر الهدى - بدء التطبيق...');
 
     // Show loading overlay
     if (DOM.loadingOverlay) {
@@ -146,11 +139,7 @@ async function initializeApp() {
     // جلب البيانات من API
     const dataLoaded = await fetchSoundsData();
 
-    if (dataLoaded) {
-        console.log('✅ تم جلب البيانات بنجاح');
-    } else {
-        console.warn('⚠️ تم استخدام البيانات الاحتياطية');
-    }
+    // Data loaded successfully or fallback data used
 
     // Set initial volume
     if (DOM.audioElement && DOM.volumeSlider) {
@@ -177,8 +166,6 @@ async function initializeApp() {
             DOM.loadingOverlay.classList.remove('active');
         }
     }, 500);
-
-    console.log('🌙 منابر الهدى - التطبيق جاهز!');
 }
 
 // دالة لتتبع وتحديث مدة الأصوات
@@ -269,9 +256,6 @@ function setupEventListeners() {
     // Progress bar
     if (DOM.progressBar) {
         DOM.progressBar.addEventListener('input', handleProgressChange);
-        console.log('✅ Progress bar event listener attached');
-    } else {
-        console.error('❌ Progress bar element not found!');
     }
 
     // Audio element events
@@ -279,7 +263,6 @@ function setupEventListeners() {
         DOM.audioElement.addEventListener('timeupdate', updateProgress);
         DOM.audioElement.addEventListener('loadedmetadata', updateDuration);
         DOM.audioElement.addEventListener('ended', handleAudioEnded);
-        console.log('✅ Audio element event listeners attached');
         DOM.audioElement.addEventListener('play', () => {
             AppState.isPlaying = true;
             DOM.audioPlayer.classList.add('playing');
@@ -289,7 +272,6 @@ function setupEventListeners() {
             DOM.audioPlayer.classList.remove('playing');
         });
         DOM.audioElement.addEventListener('error', (e) => {
-            console.error('❌ خطأ في تحميل الصوت:', e);
             showNotification('error', 'خطأ', 'تعذر تحميل الملف الصوتي. يرجى المحاولة مرة أخرى.');
 
             // محاولة تشغيل الصوت التالي
@@ -298,7 +280,6 @@ function setupEventListeners() {
             }, 2000);
         });
         DOM.audioElement.addEventListener('stalled', () => {
-            console.warn('⚠️ تباطؤ في تحميل الصوت');
             showNotification('warning', 'تحميل بطيء', 'يتم تحميل الصوت... يرجى الانتظار.');
         });
     }
@@ -584,8 +565,6 @@ function playAudio(contentId, readerId, category) {
     DOM.audioPlayer.classList.add('active');
     DOM.audioPlayer.style.display = 'block';
 
-    console.log('🎵 Audio loaded:', reader.audioUrl);
-
     // Update favorite button
     updatePlayerFavoriteButton();
 
@@ -658,10 +637,7 @@ function closePlayer() {
 }
 
 function updateProgress() {
-    if (!DOM.audioElement.duration) {
-        console.log('⚠️ No duration yet');
-        return;
-    }
+    if (!DOM.audioElement.duration) return;
 
     const percent = (DOM.audioElement.currentTime / DOM.audioElement.duration) * 100;
 
@@ -676,17 +652,10 @@ function updateProgress() {
 
     // Update listening time
     AppState.statistics.totalListeningTime = (AppState.statistics.totalListeningTime || 0) + 1;
-
-    // Debug log every 5 seconds
-    const currentSecond = Math.floor(DOM.audioElement.currentTime);
-    if (currentSecond % 5 === 0 && currentSecond !== 0) {
-        console.log(`📊 Progress: ${percent.toFixed(1)}% - Width: ${DOM.progressFill.style.width} - ${formatTime(DOM.audioElement.currentTime)} / ${formatTime(DOM.audioElement.duration)}`);
-    }
 }
 
 function updateDuration() {
     DOM.duration.textContent = formatTime(DOM.audioElement.duration);
-    console.log('⏱️ Duration loaded:', formatTime(DOM.audioElement.duration));
 }
 
 function handleProgressChange(e) {
@@ -694,7 +663,6 @@ function handleProgressChange(e) {
 
     const time = (e.target.value / 100) * DOM.audioElement.duration;
     DOM.audioElement.currentTime = time;
-    console.log('🎚️ Progress changed to:', formatTime(time));
 }
 
 function handleVolumeChange(e) {
@@ -1024,8 +992,6 @@ function updateStatisticsTable() {
 }
 
 function renderStatisticsCharts() {
-    console.log('📊 Rendering statistics charts...');
-
     // Use setTimeout to ensure DOM is ready and prevent animation issues
     setTimeout(() => {
         renderTopDuasChart();
@@ -1035,14 +1001,10 @@ function renderStatisticsCharts() {
 
 function renderTopDuasChart() {
     const canvas = document.getElementById('topDuasChart');
-    if (!canvas) {
-        console.error('❌ topDuasChart canvas not found');
-        return;
-    }
+    if (!canvas) return;
 
     // Destroy existing chart instance to prevent infinite expansion
     if (topDuasChartInstance) {
-        console.log('🔄 Destroying existing duas chart...');
         topDuasChartInstance.destroy();
         topDuasChartInstance = null;
     }
@@ -1055,8 +1017,6 @@ function renderTopDuasChart() {
             plays: totalPlays
         };
     }).sort((a, b) => b.plays - a.plays).slice(0, 5);
-
-    console.log('📈 Creating duas chart with data:', duaStats);
 
     topDuasChartInstance = new Chart(canvas, {
         type: 'bar',
@@ -1103,14 +1063,10 @@ function renderTopDuasChart() {
 
 function renderTopReadersChart() {
     const canvas = document.getElementById('topReadersChart');
-    if (!canvas) {
-        console.error('❌ topReadersChart canvas not found');
-        return;
-    }
+    if (!canvas) return;
 
     // Destroy existing chart instance to prevent infinite expansion
     if (topReadersChartInstance) {
-        console.log('🔄 Destroying existing readers chart...');
         topReadersChartInstance.destroy();
         topReadersChartInstance = null;
     }
@@ -1132,8 +1088,6 @@ function renderTopReadersChart() {
         .map(([name, plays]) => ({ name, plays }))
         .sort((a, b) => b.plays - a.plays)
         .slice(0, 5);
-
-    console.log('📈 Creating readers chart with data:', topReaders);
 
     topReadersChartInstance = new Chart(canvas, {
         type: 'bar',
@@ -1335,5 +1289,3 @@ window.addEventListener('scroll', () => {
 
 // Make switchTab available globally for onclick handlers
 window.switchTab = switchTab;
-
-console.log('🌙 منابر الهدى - جميع الأنظمة جاهزة!');

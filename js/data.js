@@ -28,11 +28,8 @@ const defaultImages = {
 // دالة جلب البيانات من الـ API
 async function fetchSoundsData() {
     try {
-        console.log('🔄 جاري جلب البيانات من API...');
-
         // استخدام CORS Proxy إذا كان محدداً
         const url = CORS_PROXY ? CORS_PROXY + encodeURIComponent(SOUNDS_JSON_URL) : SOUNDS_JSON_URL;
-        console.log('📡 الرابط:', url);
 
         const response = await fetch(url);
 
@@ -41,16 +38,12 @@ async function fetchSoundsData() {
         }
 
         rawData = await response.json();
-        console.log('✅ تم جلب البيانات بنجاح!', rawData);
 
         // معالجة البيانات
         processData();
 
         return true;
     } catch (error) {
-        console.error('❌ خطأ في جلب البيانات:', error);
-        console.log('💡 تلميح: إذا كنت تستخدم localhost، تأكد من تفعيل CORS_PROXY في js/data.js');
-
         // استخدام بيانات تجريبية في حالة الفشل
         useFallbackData();
 
@@ -60,10 +53,7 @@ async function fetchSoundsData() {
 
 // دالة معالجة البيانات وتحويلها للصيغة المطلوبة
 function processData() {
-    if (!rawData) {
-        console.error('❌ لا توجد بيانات للمعالجة');
-        return;
-    }
+    if (!rawData) return;
 
     duasData = [];
     latmiyatData = [];
@@ -132,16 +122,10 @@ function processData() {
 
     // دمج كل البيانات
     allContent = [...duasData, ...latmiyatData];
-
-    console.log('✅ تمت معالجة البيانات:');
-    console.log(`   📚 الأدعية: ${duasData.length}`);
-    console.log(`   🎭 اللطميات: ${latmiyatData.length}`);
-    console.log(`   📊 المجموع: ${allContent.length}`);
 }
 
 // بيانات احتياطية في حالة فشل جلب البيانات
 function useFallbackData() {
-    console.log('⚠️ استخدام البيانات الاحتياطية...');
 
     rawData = {
         "kumail": {
