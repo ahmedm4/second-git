@@ -1100,12 +1100,13 @@ body.dark-mode .player-progress-bar {
     border-radius: var(--radius-full);
     transition: width 0.1s linear;
     pointer-events: none;
+    z-index: 1;
 }
 
 .progress-fill::after {
     content: '';
     position: absolute;
-    right: 0;
+    right: -8px;
     top: 50%;
     transform: translateY(-50%);
     width: 16px;
@@ -1114,6 +1115,12 @@ body.dark-mode .player-progress-bar {
     border-radius: var(--radius-full);
     box-shadow: var(--shadow-md);
     transition: transform var(--transition-fast);
+    opacity: 0;
+}
+
+/* Show the indicator when playing */
+.audio-player.playing .progress-fill::after {
+    opacity: 1;
 }
 
 .player-progress-bar:hover .progress-fill::after {

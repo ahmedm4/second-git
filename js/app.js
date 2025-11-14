@@ -116,6 +116,12 @@ const DOM = {
     loadingOverlay: document.getElementById('loadingOverlay')
 };
 
+// Verify critical DOM elements
+console.log('🔍 DOM Elements Check:');
+console.log('- progressBar:', DOM.progressBar ? '✅' : '❌');
+console.log('- progressFill:', DOM.progressFill ? '✅' : '❌');
+console.log('- audioElement:', DOM.audioElement ? '✅' : '❌');
+
 // ==========================================
 // 3. INITIALIZATION
 // ==========================================
@@ -658,8 +664,13 @@ function updateProgress() {
     }
 
     const percent = (DOM.audioElement.currentTime / DOM.audioElement.duration) * 100;
+
+    // Update both the range input and the visual fill
     DOM.progressBar.value = percent;
     DOM.progressFill.style.width = `${percent}%`;
+
+    // Force browser to repaint
+    void DOM.progressFill.offsetWidth;
 
     DOM.currentTime.textContent = formatTime(DOM.audioElement.currentTime);
 
@@ -667,8 +678,9 @@ function updateProgress() {
     AppState.statistics.totalListeningTime = (AppState.statistics.totalListeningTime || 0) + 1;
 
     // Debug log every 5 seconds
-    if (Math.floor(DOM.audioElement.currentTime) % 5 === 0 && Math.floor(DOM.audioElement.currentTime) !== 0) {
-        console.log(`📊 Progress: ${percent.toFixed(1)}% - ${formatTime(DOM.audioElement.currentTime)} / ${formatTime(DOM.audioElement.duration)}`);
+    const currentSecond = Math.floor(DOM.audioElement.currentTime);
+    if (currentSecond % 5 === 0 && currentSecond !== 0) {
+        console.log(`📊 Progress: ${percent.toFixed(1)}% - Width: ${DOM.progressFill.style.width} - ${formatTime(DOM.audioElement.currentTime)} / ${formatTime(DOM.audioElement.duration)}`);
     }
 }
 
