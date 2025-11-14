@@ -67,7 +67,6 @@ function processData() {
 
         // تحقق من أن القسم يحتوي على بيانات صحيحة
         if (!category || !category.sounds || !Array.isArray(category.sounds)) {
-            console.warn(`⚠️ القسم ${categoryKey} لا يحتوي على بيانات صحيحة`);
             return;
         }
 
