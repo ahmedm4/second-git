@@ -1087,37 +1087,37 @@ body.dark-mode .player-progress-bar {
     height: 100%;
     opacity: 0;
     cursor: pointer;
-    z-index: 3;
+    z-index: 10;
+    margin: 0;
 }
 
 .progress-fill {
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
-    width: 0;
-    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    bottom: 0;
+    width: 0%;
+    background: #3b82f6;
+    background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
     border-radius: var(--radius-full);
     transition: width 0.1s linear;
     pointer-events: none;
-    z-index: 2;
-    will-change: width;
+    z-index: 1;
+    display: block;
 }
 
 .progress-fill::after {
     content: '';
     position: absolute;
-    right: -2px;
+    right: -6px;
     top: 50%;
     transform: translateY(-50%);
-    width: 14px;
-    height: 14px;
-    background: var(--color-white);
-    border-radius: var(--radius-full);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    transition: transform var(--transition-fast);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    z-index: 1;
 }
 
 /* Show the indicator when playing */
@@ -1126,7 +1126,7 @@ body.dark-mode .player-progress-bar {
 }
 
 .player-progress-bar:hover .progress-fill::after {
-    transform: translateY(-50%) scale(1.2);
+    transform: translateY(-50%) scale(1.15);
 }
 
 /* Player Controls */

@@ -645,8 +645,12 @@ function updateProgress() {
     DOM.progressBar.value = percent;
     DOM.progressFill.style.width = `${percent}%`;
 
-    // Force browser to repaint
-    void DOM.progressFill.offsetWidth;
+    // Debug - temporary
+    if (Math.floor(DOM.audioElement.currentTime) === 5) {
+        console.log('✅ Progress at 5s:', percent.toFixed(2) + '%', 'Width:', DOM.progressFill.style.width);
+        console.log('Fill element:', DOM.progressFill);
+        console.log('Computed style:', window.getComputedStyle(DOM.progressFill).width);
+    }
 
     DOM.currentTime.textContent = formatTime(DOM.audioElement.currentTime);
 
